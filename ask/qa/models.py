@@ -10,6 +10,13 @@ class Question(models.Model):
 	rating = models.IntegerField()
 	author = models.ForeignKey(User)
 	likes = models.TextField()
+	def __unicode__(self):
+		return self.title
+	def get_absolute_url(self):
+		return ''
+	class Meta:
+		db_table = 'questionpost'
+		ordering = ['-added_at']
 
 
 class Answer(models.Model):
