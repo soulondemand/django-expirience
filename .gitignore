@@ -1,4 +1,4 @@
-*.html
 *.log
 *.pyc
 nginx.error_log
+!ask/template/*.html
