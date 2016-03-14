@@ -16,7 +16,7 @@ class Question(models.Model):
 		return '/question/%d/' % self.pk
 	class Meta:
 		db_table = 'question_post'
-		ordering = ['-added_at']
+		ordering = ['-id']
 
 
 class Answer(models.Model):
