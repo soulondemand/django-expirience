@@ -23,7 +23,20 @@ def main_page(request):
         'title': 'All posts:'
     })
 
-def popular_page(request, *args, **kwargs):
+def popular_page(request):
+    posts = Question.objects.order_by('-rating')
+    limit = request.GET.get('limit', 10)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, limit)
+    paginator.baseurl = '/popular/?page='
+    page = paginator.page(page) # Page
+    return render(request, 'main_page.html', {
+        'posts': page.object_list,
+        'paginator': paginator,
+        'page': page,
+        'title': 'All posts:'
+    })
+   
     return HttpResponse('Popular question page.')
 
 def question_id_page(request, question_id):
