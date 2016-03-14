@@ -12,7 +12,7 @@ class Question(models.Model):
 	likes = models.TextField()
 	def __unicode__(self):
 		return self.title
-	def get_absolute_url(self):
+	def get_url(self):
 		return '/question/%d/' % self.pk
 	class Meta:
 		db_table = 'question_post'

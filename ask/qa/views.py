@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from .models import Question
 
 # Create your views here.
@@ -8,8 +9,19 @@ from django.http import HttpResponse
 def test(request, *args, **kwargs):
     return HttpResponse('Dummy view.')
 
-def main_page(request, *args, **kwargs):
-    return HttpResponse('Main page.')
+def main_page(request):
+    posts = Question.objects.filter()
+    limit = request.GET.get('limit', 10)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, limit)
+    paginator.baseurl = '/?page='
+    page = paginator.page(page) # Page
+    return render(request, 'main_page.html', {
+        'posts': page.object_list,
+        'paginator': paginator,
+        'page': page,
+        'title': 'All posts:'
+    })
 
 def popular_page(request, *args, **kwargs):
     return HttpResponse('Popular question page.')
