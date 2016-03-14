@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Question(models.Model):
 	title = models.CharField(max_length=255)
 	text = models.TextField()
-	added_at = models.DateTimeField()
+        added_at = models.DateTimeField(null=False)
 	rating = models.IntegerField()
 	author = models.ForeignKey(User)
 	likes = models.TextField()
@@ -21,7 +21,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
 	text = models.TextField()
-	added_at = models.DateTimeField()
+	added_at = models.DateTimeField(null=False)
 	question = models.ForeignKey(Question)
 	author = models.ForeignKey(User)
 
