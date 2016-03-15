@@ -64,5 +64,5 @@ def question_id_page(request, question_id):
     return render(request, 'question_post.html', {
         'title': question.title,
         'text': question.text,
-        'comments': question.answer_set.all()[:],
+        'answers': question.answer_set.all()[:],
     })
