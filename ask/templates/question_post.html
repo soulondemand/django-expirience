@@ -5,9 +5,9 @@
 
 {% block body  %}
 Text: {{text}}
-{% for comment in comments %}                                                                           
+{% for answer in answers%}                                                                           
 <div>
-*{{comment.text}}                                                                                                       
+*{{answer.text}}                                                                                                       
 </div>
 {% endfor %}
 {% endblock %}
