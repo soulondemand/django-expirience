@@ -6,6 +6,7 @@ admin.autodiscover()
 from qa.views import main_page
 from qa.views import popular_page
 from qa.views import question_id_page 
+from qa.views import add_ask_page 
 
 urlpatterns = patterns('',
     # Examples:
@@ -19,7 +20,7 @@ urlpatterns = patterns('',
 
     url(r'^login/', include('qa.urls')),
     url(r'^signup/', include('qa.urls')),
-    url(r'^ask/', include('qa.urls')),
+    url(r'^ask/', add_ask_page, name = 'add_ask_page'),
     url(r'^new/', include('qa.urls')),
     #url(r'^', include('qa.urls')),
 )

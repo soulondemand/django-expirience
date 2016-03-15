@@ -1,13 +1,29 @@
 from django.http import Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 from .models import Question
+from qa.forms import AskForm
 
 # Create your views here.
 from django.http import HttpResponse 
 
 def test(request, *args, **kwargs):
     return HttpResponse('Dummy view.')
+
+def add_ask_page(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'add_ask.html', {
+        'form': form,
+    })
+
 
 def main_page(request):
     posts = Question.objects.filter()
@@ -20,7 +36,7 @@ def main_page(request):
         'posts': page.object_list,
         'paginator': paginator,
         'page': page,
-        'title': 'All posts:'
+        'title': 'All posts:',
     })
 
 def popular_page(request):
@@ -34,7 +50,7 @@ def popular_page(request):
         'posts': page.object_list,
         'paginator': paginator,
         'page': page,
-        'title': 'All posts:'
+        'title': 'All posts:',
     })
    
     return HttpResponse('Popular question page.')

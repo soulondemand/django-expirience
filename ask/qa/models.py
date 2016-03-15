@@ -11,9 +11,12 @@ class Question(models.Model):
 	author = models.ForeignKey(User)
 	likes = models.TextField()
 	def __unicode__(self):
-		return self.title
+	    return self.title
 	def get_url(self):
-		return '/question/%d/' % self.pk
+	    return '/question/%d/' % self.pk
+	#def save(self):
+        #    question = Question(**self.cleaned_data)
+        #    return question 
 	class Meta:
 		db_table = 'question_post'
 		ordering = ['-id']
