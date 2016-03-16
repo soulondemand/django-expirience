@@ -4,7 +4,18 @@
 
 
 {% block body  %}
+
 Text: {{text}}
+
+<form method="post" action="/answer/">                                                                           
+{% csrf_token %}                                                                                              
+{{ form.as_p }}                                                                                               
+<div class="form-actions">                                                                                    
+<button type="submit" class="btn btn-primary">Ответить</button>                                              
+</div>                                                                                                        
+</form>
+<div>
+
 {% for answer in answers%}                                                                           
 <div>
 *{{answer.text}}                                                                                                       

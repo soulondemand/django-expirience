@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from .models import Question
 from qa.forms import AskForm
+from qa.forms import AnswerForm
 
 # Create your views here.
 from django.http import HttpResponse 
@@ -23,6 +24,15 @@ def add_ask_page(request):
     return render(request, 'add_ask.html', {
         'form': form,
     })
+
+def add_answer(request):
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer_obj = form.save()
+            question_obj = answer_obj.question
+            url = question_obj.get_url()
+            return HttpResponseRedirect(url)
 
 
 def main_page(request):
@@ -60,9 +70,10 @@ def question_id_page(request, question_id):
         question = Question.objects.get(id=question_id)
     except Question.DoesNotExist:
         raise Http404
-
+    form = AnswerForm(initial={'question': question_id})
     return render(request, 'question_post.html', {
         'title': question.title,
         'text': question.text,
         'answers': question.answer_set.all()[:],
+        'form': form,
     })
