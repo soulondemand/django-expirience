@@ -6,7 +6,7 @@ from .models import Answer
 
 class AskForm(forms.Form):
     title = forms.CharField(max_length=100)
-    text  = forms.IntegerField(widget=forms.Textarea)
+    text  = forms.CharField(widget=forms.Textarea)
     def clean_title(self):
         title = self.cleaned_data['title']
         #if not is_ethic(message):
@@ -34,7 +34,7 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(max_length=100)
-    question = forms.CharField(widget=forms.HiddenInput())
+    question = forms.IntegerField(widget=forms.HiddenInput())
     def clean_text(self):
         text = self.cleaned_data['text']
         #if not is_ethic(message):
