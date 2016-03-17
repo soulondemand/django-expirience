@@ -26,11 +26,6 @@ class AskForm(forms.Form):
         question.author = user
         question.save()
         return question
-    #def __init__(self, question, **kwargs):
-    #    self.title = question.title;
-    #    self.text = question.text;
-    #    self. author= question.author;
-    #    super(AskForm, self).__init__(**kwargs)
 
 class AnswerForm(forms.Form):
     text = forms.CharField(max_length=100)
@@ -57,13 +52,24 @@ class AnswerForm(forms.Form):
         answer_obj.text = self.cleaned_data['text']
         answer_obj.save()
         return answer_obj
-    #def __init__(self, question, **kwargs):
-    #    self._question = question
-    #    super(AnswerForm, self).__init__(**kwargs)
 
     #def clean():
 
-    #def save(self):
-    #    post = Post(**self.cleaned_data)
-    #    post.save()
-    #    return post    #    return post
+class SignupForm(forms.Form):
+    username = forms.CharField(max_length=30)
+    email = forms.EmailField()
+    password = forms.CharField(widget = forms.PasswordInput())
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        return username
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        return email
+    def clean_(lsswordself):
+        password = self.cleaned_data['password']
+        return password
+    #def save(self)
+    #    return
+
+
+

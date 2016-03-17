@@ -1,10 +1,12 @@
 from django.http import Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from .models import Question
 from qa.forms import AskForm
 from qa.forms import AnswerForm
+from qa.forms import SignupForm
 
 # Create your views here.
 from django.http import HttpResponse 
@@ -77,3 +79,22 @@ def question_id_page(request, question_id):
         'answers': question.answer_set.all()[:],
         'form': form,
     })
+
+def login_page(request):
+    return HttpResponse('Dummy view.')
+
+def signup_page(request):
+    form = SignupForm()
+    if request.method == "POST":
+        if form.is_valid():
+            #create user
+            user = User.objects.create_user( form.username, form.email, form.password)
+            user.save()
+        return HttpResponseRedirect("/")
+    if request.method == "GET":
+        return render(request, 'signup.html', {
+            'title': 'Signup',
+            'form': form, 
+        })
+
+

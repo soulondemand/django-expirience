@@ -1,0 +1,13 @@
+{% extends 'layout.html'%}
+
+{% block title %} Title: {{title}}  {% endblock %}
+
+{% block body  %}
+<form method="post" action="/signup/">
+{% csrf_token %}	
+{{ form.as_p }}
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Регистрация</button>
+</div>
+</form>
+{% endblock %}
