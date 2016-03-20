@@ -72,7 +72,7 @@ def question_id_page(request, question_id):
         question = Question.objects.get(id=question_id)
     except Question.DoesNotExist:
         raise Http404
-    form = AnswerForm(initial={'question': question_id})
+    form = AnswerForm(initial={'question': question_id,'author': request.user.id})
     return render(request, 'question_post.html', {
         'title': question.title,
         'text': question.text,
