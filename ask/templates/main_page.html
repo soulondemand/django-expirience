@@ -18,7 +18,10 @@ Hello, {% if user.is_authenticated %}{{ user.username }}{% else %}anonymous{% en
 
 <h2>{{title}}</h2>
 {% for post in posts.all%}
-<div><a href="{{post.get_url}}">{{ post.title }}</a></div>
+<div>
+	<a href="{{post.get_url}}">{{ post.title }}</a>
+	(author: {{post.author}})
+</div>
 {% endfor %}
 
 <nav>
