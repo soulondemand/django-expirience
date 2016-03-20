@@ -7,7 +7,7 @@ from .models import Answer
 class AskForm(forms.Form):
     title = forms.CharField(max_length=100)
     text  = forms.CharField(widget=forms.Textarea)
-    author = forms.IntegerField()
+    author = forms.IntegerField(widget=forms.HiddenInput())
     def clean_title(self):
         title = self.cleaned_data['title']
         #if not is_ethic(message):
