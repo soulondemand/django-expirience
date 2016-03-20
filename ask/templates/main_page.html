@@ -13,6 +13,8 @@
 	<li style="display:inline"><a href="/login/">Войти</a></li>
 	{#<li style="display:inline"><a href="/logout/"></a>Выйти</li>#}
 </ul>
+Hello, {% if user.is_authenticated %}{{ user.username }}{% else %}anonymus{% endif %}.
+
 <h2>{{title}}</h2>
 {% for post in posts.all%}
 <div><a href="{{post.get_url}}">{{ post.title }}</a></div>
