@@ -22,7 +22,7 @@ def add_ask_page(request):
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
-        form = AskForm()
+        form = AskForm(initial={'author':request.user.id})
     return render(request, 'add_ask.html', {
         'form': form,
     })

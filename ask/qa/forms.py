@@ -7,6 +7,7 @@ from .models import Answer
 class AskForm(forms.Form):
     title = forms.CharField(max_length=100)
     text  = forms.CharField(widget=forms.Textarea)
+    author = forms.IntegerField()
     def clean_title(self):
         title = self.cleaned_data['title']
         #if not is_ethic(message):
@@ -19,11 +20,17 @@ class AskForm(forms.Form):
         #    raise forms.ValidationError(
         #        u'Message not valid', code=12)
         return text
+    def clean_author(self):
+        author = self.cleaned_data['author']
+        return author
     #def clean(self):
     def save(self):
-        user = User.objects.get(id=1)
-        question = Question(**self.cleaned_data)
+        user_id = self.cleaned_data['author'] 
+        user = User.objects.get(id=user_id )
+        question = Question()
         question.author = user
+        question.title = self.cleaned_data['title']
+        question.text = self.cleaned_data['text']
         question.save()
         return question
 
