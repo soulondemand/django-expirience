@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.http import Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
@@ -48,7 +49,7 @@ def main_page(request):
         'posts': page.object_list,
         'paginator': paginator,
         'page': page,
-        'title': 'All posts:',
+        'title': 'Все вопросы:',
     })
 
 def popular_page(request):
@@ -62,7 +63,7 @@ def popular_page(request):
         'posts': page.object_list,
         'paginator': paginator,
         'page': page,
-        'title': 'All posts:',
+        'title': 'Популярные вопросы:',
     })
    
     return HttpResponse('Popular question page.')
