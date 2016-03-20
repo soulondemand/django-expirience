@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
 from .models import Question
-from qa.forms import AskForm
-from qa.forms import AnswerForm
-from qa.forms import SignupForm
+from qa.forms import AskForm 
+from qa.forms import AnswerForm 
+from qa.forms import SignupForm1 
 
 # Create your views here.
 from django.http import HttpResponse 
@@ -83,16 +83,21 @@ def question_id_page(request, question_id):
     })
 
 def signup_page(request):
-    form = SignupForm()
     if request.method == "POST":
+        form = SignupForm1(request.POST)
         if form.is_valid():
-            #create user
-            user = User.objects.create_user( form.username, form.email, form.password)
+            user = User.objects.create_user( form.cleaned_data["username"],
+                    form.cleaned_data["email"],
+                    form.cleaned_data["password"]
+                    )
             user.save()
-        return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/")
+        else:
+            return HttpResponseRedirect("/signup/")
     if request.method == "GET":
+        form = SignupForm1()
         return render(request, 'signup.html', {
-            'title': 'Signup',
+            'title': 'Регистрация нового пользователя',
             'form': form, 
         })
 
