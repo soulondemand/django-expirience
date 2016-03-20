@@ -3,12 +3,10 @@ from django.http import Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .models import Question
-from qa.forms import AskForm 
-from qa.forms import AnswerForm 
-from qa.forms import SignupForm1 
+from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm 
 
 # Create your views here.
 from django.http import HttpResponse 
@@ -84,7 +82,7 @@ def question_id_page(request, question_id):
 
 def signup_page(request):
     if request.method == "POST":
-        form = SignupForm1(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user( form.cleaned_data["username"],
                     form.cleaned_data["email"],
@@ -95,15 +93,37 @@ def signup_page(request):
         else:
             return HttpResponseRedirect("/signup/")
     if request.method == "GET":
-        form = SignupForm1()
+        form = SignupForm()
         return render(request, 'signup.html', {
             'title': 'Регистрация нового пользователя',
             'form': form, 
+            'button-text': 'Регистировать',
         })
 
 
 def login_page(request):
-    return HttpResponse('Dummy view.')
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect("/")
+                    # Redirect to a success page.
+                #else:
+                    # Return a 'disabled account' error message
+            #else:
+                # Return an 'invalid login' error message.
+    if request.method == "GET":
+        form = LoginForm()
+        return render(request, 'login.html', {
+            'title': 'Аутентификация',
+            'form': form,
+            'button-text': 'Войти',
+        })
 
 def logout_page(request):
     logout(request)
