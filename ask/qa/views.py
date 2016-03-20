@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
 from .models import Question
 from qa.forms import AskForm
@@ -81,9 +82,6 @@ def question_id_page(request, question_id):
         'form': form,
     })
 
-def login_page(request):
-    return HttpResponse('Dummy view.')
-
 def signup_page(request):
     form = SignupForm()
     if request.method == "POST":
@@ -98,4 +96,11 @@ def signup_page(request):
             'form': form, 
         })
 
+
+def login_page(request):
+    return HttpResponse('Dummy view.')
+
+def logout_page(request):
+    logout(request)
+    return  HttpResponseRedirect('/')
 
