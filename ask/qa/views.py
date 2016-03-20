@@ -89,6 +89,8 @@ def signup_page(request):
                     form.cleaned_data["password"]
                     )
             user.save()
+            request.session.flush()
+            request.session['signup']=user.username
             return HttpResponseRedirect("/")
         else:
             return HttpResponseRedirect("/signup/")
