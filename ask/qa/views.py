@@ -22,7 +22,6 @@ def add_ask_page(request):
         logger.debug("add_ask_page():  method POST")
         form = AskForm(request.POST)
         logger.debug("add_ask_page():  form created")
-        logger.debug("error:" + " ".join(form.errors))
         if form.is_valid():
             logger.debug("add_ask_page():  form is valid")
             question = form.save()
