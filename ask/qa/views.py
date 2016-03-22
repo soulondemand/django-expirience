@@ -22,14 +22,15 @@ def add_ask_page(request):
         logger.debug("add_ask_page():  method POST")
         form = AskForm(request.POST)
         logger.debug("add_ask_page():  form created")
+        logger.debug("error:" + " ".join(form.errors))
         if form.is_valid():
             logger.debug("add_ask_page():  form is valid")
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
-        else
+        else:
             logger.debug("add_ask_page():  form is not valid")
-            logger.debug("error: " + form.errors)
+            logger.debug("error:" + " ".join(form.errors))
             
     else:
         logger.debug("add_ask_page():  metod GET")
