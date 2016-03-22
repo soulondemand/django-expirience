@@ -27,7 +27,7 @@ class AnswerForm(forms.Form):
     text = forms.CharField(max_length=100)
     question = forms.IntegerField(widget=forms.HiddenInput())
     #author = forms.IntegerField()
-    author = forms.IntegerField(widget=forms.HiddenInput())
+    #author = forms.IntegerField(widget=forms.HiddenInput())
     def clean_text(self):
         text = self.cleaned_data['text']
         #if not is_ethic(message):
@@ -40,11 +40,12 @@ class AnswerForm(forms.Form):
         #    raise forms.ValidationError(
         #        u'Message not valid', code=12)
         return question
-    def clean_author(self):
-        author = self.cleaned_data['author']
-        return author
+    #def clean_author(self):
+    #    author = self.cleaned_data['author']
+    #    return author
     def save(self):
-        user_obj = User.objects.get(id=self.cleaned_data['author'])
+        #user_obj = User.objects.get(id=self.cleaned_data['author'])
+        user_obj = self._user
         cleaned_question_value = self.cleaned_data['question']
         question_obj = Question.objects.get(id=cleaned_question_value)
         answer_obj = Answer()

@@ -45,6 +45,7 @@ def add_ask_page(request):
 def add_answer(request):
     if request.method == "POST":
         form = AnswerForm(request.POST)
+        form._user = request.user
         if form.is_valid():
             answer_obj = form.save()
             question_obj = answer_obj.question
