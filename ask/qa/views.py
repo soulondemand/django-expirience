@@ -20,6 +20,8 @@ def add_ask_page(request):
     logger.debug("add_ask_page() !")
     if request.method == "POST":
         logger.debug("add_ask_page():  method POST")
+        logger.debug("add_ask_page(): POST params - " + ", ".join(request.POST))
+        logger.debug("add_ask_page(): POST[author]=" + request.POST.get('author','-'))
         form = AskForm(request.POST)
         logger.debug("add_ask_page():  form created")
         if form.is_valid():
