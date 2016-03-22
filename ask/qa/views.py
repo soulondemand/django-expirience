@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .models import Question
 from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm 
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 from django.http import HttpResponse 
@@ -15,14 +17,20 @@ def test(request, *args, **kwargs):
     return HttpResponse('Dummy view.')
 
 def add_ask_page(request):
+    logger.debug("add_ask_page() !")
     if request.method == "POST":
+        logger.debug("add_ask_page():  method POST")
         form = AskForm(request.POST)
+        logger.debug("add_ask_page():  form created")
         if form.is_valid():
+            logger.debug("add_ask_page():  form is valid")
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
+        logger.debug("add_ask_page():  metod GET")
         form = AskForm(initial={'author':request.user.id})
+    logger.debug("add_ask_page(): return render")
     return render(request, 'add_ask.html', {
         'form': form,
     })

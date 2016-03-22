@@ -6,6 +6,7 @@ sudo ln -sf /home/`echo $USER`/web/etc/nginx.conf  /etc/nginx/sites-enabled/test
 sudo /etc/init.d/nginx restart
 sudo ln -sf /home/`echo $USER`/web/etc/gunicorn.test.conf   /etc/gunicorn.d/test
 sudo ln -sf /home/`echo $USER`/web/etc/gunicorn.ask.conf   /etc/gunicorn.d/ask
+sudo ./empty_log.sh
 sudo /etc/init.d/gunicorn restart
 #sudo /etc/init.d/mysql start
 #gunicorn -D -b 0.0.0.0:8080 --workers=2 hello:app
