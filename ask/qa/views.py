@@ -99,13 +99,20 @@ def signup_page(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user( form.cleaned_data["username"],
-                    form.cleaned_data["email"],
-                    form.cleaned_data["password"]
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email    = form.cleaned_data['email']
+            user = User.objects.create_user( username,
+                    email,
+                    password
                     )
             user.save()
             request.session.flush()
-            request.session['signup']=user.username
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect("/")
             return HttpResponseRedirect("/")
         else:
             return HttpResponseRedirect("/signup/")
