@@ -23,6 +23,7 @@ def add_ask_page(request):
         logger.debug("add_ask_page(): POST params - " + ", ".join(request.POST))
         logger.debug("add_ask_page(): POST[author]=" + request.POST.get('author','-'))
         form = AskForm(request.POST)
+        form._user = request.user
         logger.debug("add_ask_page():  form created")
         if form.is_valid():
             logger.debug("add_ask_page():  form is valid")
@@ -35,7 +36,7 @@ def add_ask_page(request):
             
     else:
         logger.debug("add_ask_page():  metod GET")
-        form = AskForm(initial={'author':request.user.id})
+        form = AskForm()
     logger.debug("add_ask_page(): return render")
     return render(request, 'add_ask.html', {
         'form': form,
