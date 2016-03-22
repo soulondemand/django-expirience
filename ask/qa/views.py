@@ -27,6 +27,10 @@ def add_ask_page(request):
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
+        else
+            logger.debug("add_ask_page():  form is not valid")
+            logger.debug("error: " + form.errors)
+            
     else:
         logger.debug("add_ask_page():  metod GET")
         form = AskForm(initial={'author':request.user.id})
